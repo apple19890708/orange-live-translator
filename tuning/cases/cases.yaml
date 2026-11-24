@@ -1,0 +1,67 @@
+# 回歸測試案例：使用者回報過的問題片段。每次改辨識或翻譯後執行 tuning\run_cases.py。
+#
+# 欄位：
+#   audio            16kHz 單聲道 16 位元 .pcm（從 logs/ 的錄音剪下來保存，logs 只留最近 3 場）
+#   asr_contains     辨識結果（套用修正清單後）必須出現的字（多個候選用 | 隔開，任一個出現即可）
+#   asr_not_contains 辨識結果不能出現的字
+#   tgt_contains     譯文必須出現的字（多個候選用 | 隔開，任一個出現即可）
+#   tgt_not_contains 譯文不能出現的字
+#   known_fail       目前已知做不到的檢查（列出項目；它們失敗不算退步，但成功時會提示）
+#   issue            對應 tuning/issues.md 的編號
+
+- id: C01
+  title: 「歌のライブイン台北」被聽成「イン タイ」，翻成泰國
+  issue: I07
+  audio: audio/c01_taipei.pcm
+  asr_contains: [台北]
+  tgt_contains: [台北]
+  tgt_not_contains: [泰國, 引退]
+
+- id: C02
+  title: 「齟齬（そご）」被聽成「そこ」；「只有神」被轉成「隻有神」；沒標點、斷句怪
+  issue: I08
+  audio: audio/c02_sogo.pcm
+  asr_contains: [。, 神]
+  tgt_not_contains: [隻有, 冒出來]
+  known_fail: [asr_contains:齟齬が出て]
+
+- id: C03
+  title: 物販公告：一人一枚被翻成「一元」；「那個」「呃——」太多；「アルバ…」被切斷
+  issue: I09
+  audio: audio/c03_merch.pcm
+  asr_contains: [一人一枚, 日本に来る|日本人の]   # 實際是哪個不確定（精聽聽成日本人）；重點是不能出現「日本力」
+  asr_not_contains: [日本力]
+  tgt_contains: [一張|一個|一份]
+  tgt_not_contains: [一元, 那個，, 呃, ——, 相簿]
+
+- id: C04
+  title: アルバム被翻成「相簿」；アルバム等被聽成「あれは無等」；13万被翻成秋刀魚
+  issue: I10
+  audio: audio/c04_album.pcm
+  asr_contains: [アルバム等, ファーストアルバム]
+  asr_not_contains: [無等]
+  tgt_contains: [專輯]
+  tgt_not_contains: [相簿, 秋刀魚, 無等]
+
+- id: C05
+  title: 日文接英文：自動判斷語言、英文要翻成中文
+  issue: I04
+  audio: audio/c05_ja_en_switch.pcm
+  asr_contains: [spicy]
+  tgt_contains: [辣]
+  tgt_not_contains: [spicy]
+
+- id: C06
+  title: 同一句（いっぱい聴いてくれてありがとう!）連續出現：Sakura 把前文和提示詞整段吐出來；ジューツー老師殘留假名
+  issue: I15
+  audio: audio/c06_repeat_leak.pcm
+  asr_contains: [聴いてくれてありがとう]
+  tgt_contains: [謝謝]
+  tgt_not_contains: [術語表, 簡體, 歷史劇情, src->dst, ジュー]
+
+- id: C07
+  title: 「おねがい｜ますー」被切開，碎片「ますー」翻成羅馬字 masu
+  issue: I15
+  audio: audio/c07_masu_fragment.pcm
+  tgt_contains: [亞馬遜|Amazon]   # 單獨剪出來時整句完整，辨識成「Amazon」；直播中是從句子中間切開才出現「ますー」碎片
+  tgt_not_contains: [masu, Masu]

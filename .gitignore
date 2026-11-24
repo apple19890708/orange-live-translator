@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+cache/
+logs/
+config.yaml
+glossary.yaml
+.ollama_pull.log
+*.egg-info/
+dist/
+build/
+pip.log
+LiveTranslator.exe
+OrangeLiveTranslate.exe
+user_state.json
+tuning/cases/audio/
+tuning/benchmark/*.pcm
+tuning/benchmark/mae/*.pcm
+tuning/benchmark/heldout/*.pcm
+
+# 別人影片的字幕稿、翻譯對照（版權屬原作者，只留在本機）
+tuning/benchmark/**/*.json
+tuning/benchmark/**/*.txt
+tuning/benchmark/mae/ja_refs.py
+tuning/reports/

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 260px; font: 13px "Microsoft JhengHei UI", sans-serif; margin: 12px; color: #222; }
+  h1 { font-size: 15px; margin: 0 0 8px; }
+  .row { display: flex; align-items: center; justify-content: space-between; margin: 8px 0; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: #c33; }
+  .dot.on { background: #2a2; }
+  small { color: #666; }
+  select, input[type=number] { width: 110px; }
+  button { width: 100%; margin-top: 6px; }
+  button.big { padding: 8px; font-size: 14px; font-weight: bold; margin-top: 10px; }
+  button.big.on { background: #c0392b; color: #fff; border: 1px solid #a93226; }
+</style>
+</head>
+<body>
+  <h1>Orange Live Translate</h1>
+  <div><span id="dot" class="dot"></span><span id="conn">檢查中…</span></div>
+  <small id="models"></small>
+  <button id="capture" class="big">聽譯這個分頁</button>
+  <small id="captureInfo">快捷鍵 Alt+Shift+L</small>
+  <div class="row"><label for="lang">聽譯語言</label>
+    <select id="lang">
+      <option value="auto">自動（日文／英文）</option>
+      <option value="ja">日文</option>
+      <option value="en">英文</option>
+    </select>
+  </div>
+  <div class="row"><label for="enabled">顯示字幕（Alt+T）</label><input type="checkbox" id="enabled"></div>
+  <div class="row"><label for="mode">模式</label>
+    <select id="mode">
+      <option value="auto">自動</option>
+      <option value="subs">只翻譯影片字幕</option>
+      <option value="live">只用即時聽譯</option>
+    </select>
+  </div>
+  <div class="row"><label for="showSource">顯示原文</label><input type="checkbox" id="showSource"></div>
+  <div class="row"><label for="fontSize">字級</label><input type="number" id="fontSize" min="12" max="60"></div>
+  <div class="row"><label for="serverUrl">服務位址</label><input id="serverUrl" style="width:150px"></div>
+  <button id="reconnect">重新連線</button>
+  <script src="popup.js"></script>
+</body>
+</html>

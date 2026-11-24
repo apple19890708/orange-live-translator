@@ -1,0 +1,10 @@
+# 開發者測試用設定（另一個連接埠，不影響使用者的程式）
+server:
+  port: 8799
+overlay:
+  enabled: false
+log:
+  save_audio: false
+  save_srt: false
+audio:
+  source: tab
